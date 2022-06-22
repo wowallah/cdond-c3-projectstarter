@@ -7,7 +7,7 @@ commands:
       workflow_id:
         type: string
       event:
-      type: string   
+        type: string   
     steps:
       - run:
           name: Destroy environment << parameters.workflow_id >>
