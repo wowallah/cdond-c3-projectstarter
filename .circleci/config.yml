@@ -143,7 +143,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - destroy-environment
+      - destroy-environment:
           workflow_id: << parameters.workflow_id >>
           event: on_fail     
 
