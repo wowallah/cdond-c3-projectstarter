@@ -14,7 +14,6 @@ commands:
           when: << parameter.event >>
           command: |
             aws s3 rm s3://udapeople-<< parameters.workflow_id >> --recursive
-            # aws cloudformation delete-stack --stack-name udacity-ansible-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.workflow_id >>
             aws cloudformation delete-stack --stack-name udapeople-front-end-<< parameters.workflow_id >>
             
@@ -137,14 +136,15 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            cd .circleci/ansible
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
+            aws ec2 describe-instances \
+            --filters "name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment
-          workflow_id: << parameters.workflow_id >>
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
           event: on_fail     
 
   configure-infrastructure:
@@ -152,10 +152,6 @@ jobs:
       - image: python:3.11-rc-alpine
     steps:
       - checkout
-      # - run:
-      #     name: Install tar/gzip utility
-      #     command: |
-      #       yum -y install tar gzip
       - add_ssh_keys:
           fingerprints: ["b4:db:0f:e7:e8:dc:0c:95:58:fe:97:de:4a:e7:fa:2f"]
       - attach_workspace:
