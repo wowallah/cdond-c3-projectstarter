@@ -158,11 +158,11 @@ jobs:
       - attach_workspace:
           at: .circleci/ansible/
       - run: cat .circleci/ansible/inventory.txt
-      - run: apt update && apt install -y awscli
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible 
+            apk add --update ansible
+            apk add --no-cache aws-cli 
       - run:
           name: Configure server
           command: |
