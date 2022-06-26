@@ -140,9 +140,8 @@ jobs:
             --filters "Name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text >> .circleci/ansible/inventory.txt
-      - run: mkdir -p workspace
       - persist_to_workspace:
-          root: ~/
+          root: .circleci/ansible/
           paths:
             - inventory.txt
       - destroy-environment:
@@ -157,7 +156,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["b4:db:0f:e7:e8:dc:0c:95:58:fe:97:de:4a:e7:fa:2f"]
       - attach_workspace:
-          at: ~/
+          at: .circleci/ansible/
       - run:
           name: Install dependencies
           command: |
@@ -165,9 +164,9 @@ jobs:
       - run:
           name: Configure server
           command: |
-            # ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
-            cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
+            # cd .circleci/ansible
+            # ansible-playbook -i inventory.txt configure-server.yml
  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
