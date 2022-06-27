@@ -154,7 +154,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["b4:db:0f:e7:e8:dc:0c:95:58:fe:97:de:4a:e7:fa:2f"]
+          fingerprints: ["f1:dc:a2:36:35:89:77:04:1c:4c:7c:e2:10:f1:4c:a9:b5:6d:9a:0f"]
       - attach_workspace:
           at: .circleci/ansible/
       - run: cat .circleci/ansible/inventory.txt
@@ -167,7 +167,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i -vvv .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
