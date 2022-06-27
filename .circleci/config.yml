@@ -161,6 +161,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk add openssh-client
             apk add --update ansible
             apk add --no-cache aws-cli 
       - run:
