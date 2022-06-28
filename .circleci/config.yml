@@ -166,7 +166,9 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml --private-key ~/.ssh/udacity.pem
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml 
+            
+          # --private-key ~/.ssh/udacity.pem
  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
