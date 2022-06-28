@@ -153,7 +153,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["f1:dc:a2:36:35:89:77:04:1c:4c:7c:e2:10:f1:4c:a9:b5:6d:9a:0f"]
+          fingerprints: ["e8:4c:42:26:4a:58:8c:cd:cb:48:c2:f1:0f:a4:72:18:3f:37:cc:52"]
       - attach_workspace:
           at: .circleci/ansible/
       - run: cat .circleci/ansible/inventory.txt
@@ -166,7 +166,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml --private-key ~/.ssh/aws-outlook-acct-udacity-keypair.pem
+            ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml --private-key ~/.ssh/udacity.pem
  
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
