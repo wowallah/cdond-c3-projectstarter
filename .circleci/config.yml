@@ -204,7 +204,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      -checkout
+      - checkout
       - attach_workspace:
           at: .circleci/ansible/
       - run:
