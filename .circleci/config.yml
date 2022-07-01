@@ -219,8 +219,8 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            amazon-linux-extras install epel
-            yum install -y nodejs
+            sudo amazon-linux-extras install epel
+            sudo yum install -y nodejs
       - run:
           name: Get backend url
           command: |
