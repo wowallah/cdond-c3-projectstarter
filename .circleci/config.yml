@@ -219,8 +219,8 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            sudo amazon-linux-extras install epel
-            sudo yum install -y nodejs
+            curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+            yum install -y nodejs
       - run:
           name: Get backend url
           command: |
