@@ -209,6 +209,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run:
+          name: Install tar/gzip utility
+          command: |
+            yum -y install tar gzip
       - attach_workspace:
           at: .circleci/ansible/
       - run:
