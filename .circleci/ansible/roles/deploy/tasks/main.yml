@@ -1,7 +1,6 @@
 ---
 - name: "Install npm and start the backend"
-  shell: |
-    export ANSIBLE_HOST_KEY_CHECKING=False
+  command: |
     npm install
     pm2 stop default
     pm2 start npm -- start
