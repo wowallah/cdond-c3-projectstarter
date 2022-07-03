@@ -1,3 +1,4 @@
+---
 - name: "Install npm and start the app"
   shell: |
     npm install
