@@ -18,27 +18,3 @@
     global: yes
     production: yes
     state: present
-
-- name: "start pm2"
-  become: true
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: present
-
-- name: "pm2 stop default"
-  become: true
-  pm2:
-    name: default
-    global: yes
-    production: yes
-    state: absent
-
-- name: "pm2 start npm -- start"
-  become: true
-  pm2:
-    name: npm
-    global: yes
-    production: yes
-    state: started        

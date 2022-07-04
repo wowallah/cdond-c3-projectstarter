@@ -265,9 +265,9 @@ jobs:
           command: |
             apk add tar
             apk add gzip
-            apk add npm
-            apk add nodejs
-            apk add openssh-client
+            apk add --update npm
+            apk add --update nodejs
+            apk add --update openssh-client
             apk add --update ansible
             apk add --no-cache aws-cli 
       - run:
@@ -299,10 +299,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add curl
-            apk add npm
-            apk add nodejs
-            apk add openssh-client
+            apk add --update curl
+            apk add --update npm
+            apk add --update nodejs
+            apk add --update openssh-client
             apk add --update ansible
             apk add --no-cache aws-cli 
       - run:
