@@ -1,4 +1,9 @@
 ---
+
+- name: "Wait 90 seconds for target connection."
+  wait_for_connection:
+    timeout: 90
+
 - name: "upgrade packages."
   become: true
   apt:
