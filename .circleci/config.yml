@@ -295,7 +295,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-        at: .circleci/ansible/
+          at: .circleci/ansible/
       - run:
           name: Install dependencies
           command: |
