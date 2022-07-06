@@ -240,8 +240,6 @@ jobs:
             # your code here
             cd frontend
             npm install
-            # npm audit fix --audit-level=critical --force
-            # npm audit --audit-level=critical
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive            
@@ -269,7 +267,8 @@ jobs:
             apk add --update nodejs
             apk add --update openssh-client
             apk add --update ansible
-            apk add --no-cache aws-cli 
+            # apk add --no-cache aws-cli
+            pip install awscli 
       - run:
           name: Save TYPEORM env variables to .env
           no_output_timeout: 30m
@@ -327,6 +326,7 @@ jobs:
             --filters "Name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
+            echo ${BACKEND_IP} >> "backend/.env"
             # curl "http://${BACKEND_IP}:3030/api/status"
  
       - run:
