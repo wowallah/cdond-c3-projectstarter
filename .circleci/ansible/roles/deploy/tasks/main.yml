@@ -48,7 +48,7 @@
 
 - name: Build node services
   shell: |
-    cd/home/ubuntu/backend
+    cd /home/ubuntu/backend
     npm run build
     npm run prestart:prod
 
