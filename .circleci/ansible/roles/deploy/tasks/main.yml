@@ -34,14 +34,25 @@
     cd /home/ubuntu/backend
     tar xvzf artifact.tar.gz -C .
 
-- name: Build backend
-  become: true
+- name: Stop pm2
+  ignore_errors: yes
+  shell: |
+    cd /home/ubuntu/backend
+    pm2 stop backend
+    pm2 delete backend
+
+- name: Install node dependencies
   shell: |
     cd /home/ubuntu/backend
     npm install
+
+- name: Build node services
+  shell: |
+    cd/home/ubuntu/backend
     npm run build
+    npm run prestart:prod
 
 - name: Start pm2
   shell: |
     cd /home/ubuntu/backend 
-    pm2 start npm -- start
+    pm2 start npm --name backend -- start
