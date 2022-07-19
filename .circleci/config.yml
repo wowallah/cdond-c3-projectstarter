@@ -330,7 +330,7 @@ jobs:
             echo "API_URL = ${API_URL}"
             # echo API_URL >> "backend/.env"
             echo API_URL >> $BASH_ENV
-            curl "${API_URL}/api/status"
+            curl ${API_URL}/api/status
  
       - run:
           name: Backend smoke test.
