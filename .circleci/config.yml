@@ -308,9 +308,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl
-            apk add --update npm
-            apk add --update nodejs
+            apk add --update curl npm nodejs
             apk add --update openssh-client git
             apk add --update ansible
             apk add --no-cache aws-cli 
@@ -321,11 +319,11 @@ jobs:
             --filters "Name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "API_URL = ${API_URL}"
+            export API_URL="http://${BACKEND_IP}:3030/api/status"
+            echo "API_URL = $API_URL"
             # echo API_URL >> "backend/.env"
-            echo API_URL >> $BASH_ENV
-            curl ${API_URL}/api/status -vvv
+            echo $API_URL >> $BASH_ENV
+            curl $API_URL -vvv
  
       - run:
           name: Backend smoke test.
@@ -334,12 +332,12 @@ jobs:
             --filters "Name=tag:Name, Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "API_URL = ${API_URL}"
-            echo API_URL >> $BASH_ENV
-            curl ${API_URL}/api/status -vvv
+            export API_URL="http://${BACKEND_IP}:3030/api/status"
+            echo "API_URL = $API_URL"
+            # echo API_URL >> $BASH_ENV
+            curl $API_URL -vvv
 
-            # if curl ${API_URL}/api/status | grep "ok"
+            # if curl $API_URL | grep "ok"
             # then
             #     return 0
             # else
@@ -349,8 +347,8 @@ jobs:
           name: Frontend smoke test.
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
-            echo ${URL} 
-            if curl -s ${URL} | grep "Welcome"
+            echo $URL 
+            if curl -s $URL | grep "Welcome"
             then
                 # Change this to 0 after the job fails
               return 0
