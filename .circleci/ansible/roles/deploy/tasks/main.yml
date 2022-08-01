@@ -27,7 +27,6 @@
 - name: Copy files to backend folder
   copy:
     src: /root/project/artifact.tar.gz
-    # dest: /home/ubuntu/backend/artifact.tar.gz
     dest: /home/ubuntu/backend/
     owner: ubuntu
 
