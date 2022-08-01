@@ -153,7 +153,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["e8:4c:42:26:4a:58:8c:cd:cb:48:c2:f1:0f:a4:72:18:3f:37:cc:52"]
+          fingerprints: ["39:0e:84:f8:d4:cf:72:d0:f4:c3:3a:98:2b:db:de:58:2c:06:0a:42"]
       - attach_workspace:
           at: .circleci/ansible/
       - run: cat .circleci/ansible/inventory.txt
