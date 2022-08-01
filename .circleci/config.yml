@@ -262,7 +262,6 @@ jobs:
             apk add --update nodejs
             apk add --update openssh-client
             apk add --update ansible
-            # apk add --no-cache aws-cli
             pip install awscli 
       - run:
           name: Save TYPEORM env variables to .env
@@ -292,7 +291,7 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             export ANSIBLE_HOST_KEY_CHECKING=False
-            ansible-playbook -i inventory.txt deploy-backend.yml 
+            ansible-playbook -i inventory.txt deploy-backend.yml --private-key ~/.ssh/udacity.pem
 
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
