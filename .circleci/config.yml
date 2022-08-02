@@ -17,6 +17,25 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.workflow_id >>
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.workflow_id >>
             
+  revert-migrations:
+    description: Revert the last migration
+    parameters:
+      workflow_id:
+        type: string
+    steps:
+      -run:
+        name: Revert migrations
+        when: on_fail
+        command: |
+          SUCCESS=$(curl --insecure https://kvdb.io/BZyCCRkudx9L2178vR8Fbc/migration_${CIRCLE_WORKFLOW_ID:0:7})
+          # Logic for reverting the database state
+          if (( $SUCCESS == 1 ));
+          then
+            cd ~/project/backend
+            npm install
+            npm run migration:revert
+          fi
+
 jobs:
   build-frontend:
     docker:
@@ -337,12 +356,12 @@ jobs:
             echo API_URL >> "backend/.env"
             curl $API_URL -vvv
 
-            # if curl $API_URL | grep "ok"
-            # then
-            #     return 0
-            # else
-            #     return 1
-            # fi
+            if curl $API_URL | grep "ok"
+            then
+                return 0
+            else
+                return 1
+            fi
       - run:
           name: Frontend smoke test.
           command: |
