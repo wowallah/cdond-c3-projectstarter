@@ -390,17 +390,17 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-						yum -y install awscli curl
-            yum install -y tar gzip
-						yum -y install npm nodejs
+            yum -y install awscli curl
+            yum -y install tar gzip
+            yum -y install npm nodejs
       - run:
           name: Update cloudfront distribution
           command: |
             export OldWorkflowID=$(aws cloudformation list-exports \
             --query "Exports[?Name=='WorkflowID'].Value" \
             --no-paginate --output text)
-						echo $OldWorkflowID >> ~/OldWorkflowID.txt
-						cat ~/OldWorkflowID.txt
+            echo $OldWorkflowID >> ~/OldWorkflowID.txt
+            cat ~/OldWorkflowID.txt
 
 						aws cloudformation deploy \
 							--template-file .circleci/files/cloudfront.yml \
