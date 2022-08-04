@@ -392,7 +392,9 @@ jobs:
           command: |
             yum -y install awscli curl
             yum -y install tar gzip
-            yum -y install npm nodejs
+            curl -sL https://rpm.nodesource.com/setup_16.x | bash -
+            yum install -y nodejs
+
       - run:
           name: Update cloudfront distribution
           command: |
