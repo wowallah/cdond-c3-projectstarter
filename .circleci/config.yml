@@ -382,7 +382,6 @@ jobs:
 
   cloudfront-update:
     docker:
-      # Docker image here that supports AWS CLI
       - image: amazon/aws-cli
     steps:
       # Checkout code from git
