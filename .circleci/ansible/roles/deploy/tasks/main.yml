@@ -34,6 +34,7 @@
   shell: |
     cd /home/ubuntu/backend
     tar xvzf artifact.tar.gz -C .
+    ls -la
 
 # - name: Stop pm2
 #   ignore_errors: yes

@@ -93,7 +93,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: backend-build
+          keys: [backend-build]
       - run:
           name: Backend-test
           command: |
@@ -306,7 +306,7 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            npm i
+            npm install
             npm run build
             cd ..
             # Zip the directory
