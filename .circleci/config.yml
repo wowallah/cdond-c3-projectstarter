@@ -206,6 +206,9 @@ jobs:
             cd backend
             npm install
             npm run migrations > migration_dump.txt
+      - save_cache:
+          paths: [backend/node_modules]
+          key: run-migrations
 
       - run:
           name: Send migration status to kvdb.io OR memstash.io
