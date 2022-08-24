@@ -347,7 +347,7 @@ jobs:
             echo $API_URL >> backend/.env
             cat backend/.env
             # echo $API_URL >> $BASH_ENV
-            curl $API_URL -vvv
+            # curl $API_URL -vvv
  
       - run:
           name: Backend smoke test.
