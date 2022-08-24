@@ -411,7 +411,7 @@ jobs:
             echo $OldWorkflowID >> ~/OldWorkflowID.txt
             cat ~/OldWorkflowID.txt
 
-            aws cloudformation deploy \
+            aws cloudformation update-stack \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack-${OldWorkflowID} \
             --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:7} \
