@@ -31,6 +31,7 @@ commands:
           command: |
             SUCCESS=$(curl --insecure https://kvdb.io/BZyCCRkudx9L2178vR8Fbc/migration_<< parameters.workflow_id >>)
             # Logic for reverting the database state
+            # ~/ = /home/circleci . Your directories and files are under /home/circleci /project. ~/ workspace is just another directory if you named it workspace
             if (( $SUCCESS == 1 ));
             then
               cd ~/project/backend
