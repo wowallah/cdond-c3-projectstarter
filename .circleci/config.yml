@@ -359,12 +359,9 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
             export API_URL="http://${BACKEND_IP}:3030/api/status"
-            echo "API_URL = $API_URL"
-            # echo API_URL >> $BASH_ENV
-            # echo $API_URL >> backend/.env
             echo "API_URL = $API_URL" >> backend/.env
             cat backend/.env
-            curl $API_URL -vvv
+            curl $API_URL
 
             if curl $API_URL | grep "ok"
             then
@@ -392,7 +389,6 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      # Checkout code from git
       - checkout
       - run:
           name: Install dependencies
