@@ -245,8 +245,6 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            # your code here
-            
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
@@ -336,12 +334,15 @@ jobs:
             apk add --update openssh-client git
             apk add --update ansible
             apk add --no-cache aws-cli 
-      # - run:
-      #     name: Get backend url
-      #     command: |
-      #       echo "BACKEND_IP = $BACKEND_IP"
-      #       export API_URL="http://${BACKEND_IP}:3030"
-      #       echo "API_URL = ${API_URL}"
+      - run:
+          name: Get backend url
+          command: |
+            export BACKEND_IP=$(aws ec2 describe-instances \
+            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --output text)
+            echo "BACKEND_IP = $BACKEND_IP"
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "API_URL = ${API_URL}"
  
       - run:
           name: Backend smoke test.
