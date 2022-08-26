@@ -248,6 +248,7 @@ jobs:
             . ~/.nvm/nvm.sh
             nvm install --lts
             node -e "console.log('Running Node.js ' + process.version)"
+            nvm install-latest-npm 
 
       - run:
           name: Get backend url
