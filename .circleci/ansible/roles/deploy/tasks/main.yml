@@ -57,6 +57,11 @@
     npm run prestart:prod
 
 - name: Start pm2
+  ignore_errors: yes
   shell: |
-    cd /home/ubuntu/backend 
-    pm2 start npm --name backend -- start
+    cd /home/ubuntu/backend
+    pm2 delete backend 
+    pm2 start npm --name "backend" -- start
+    # pm2 start npm --name "backend" -- run "start:prod"
+    pm2 logs backend
+    
