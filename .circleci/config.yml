@@ -239,18 +239,9 @@ jobs:
       - run:
           name: Install node
           command: |
-            yum install -y gcc-c++ make
-            curl -sL https://rpm.nodesource.com/setup_12.x | bash -
-            yum install -y nodejs
-
-
-      # - run:
-      #     name: Install node
-      #     become: yes
-      #     become_user: root
-      #     shell: "source /root/.nvm/nvm.sh && nvm install node"
-      #     args:
-      #       executable: /bin/bash
+            # yum install -y gcc-c++ make
+            # curl -sL https://rpm.nodesource.com/setup_12.x | bash - &&
+            # yum install -y nodejs
 
       - run:
           name: Get backend url
@@ -299,7 +290,7 @@ jobs:
           name: Save TYPEORM env variables to .env
           no_output_timeout: 30m
           command: |
-            echo ENVIROMENT=development > "backend/.env"
+            echo ENVIRONMENT=development > "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
             echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
@@ -403,7 +394,7 @@ jobs:
           command: |
             yum -y install tar gzip
             yum -y install awscli curl npm nodejs
-            # curl -sL https://rpm.nodesource.com/setup_16.x | bash - && yum install -y nodejs-16.12.0
+            curl -sL https://rpm.nodesource.com/setup_12.x | bash - && yum install -y nodejs-16.12.0
 
       - run:
           name: Update cloudfront distribution
