@@ -342,9 +342,9 @@ jobs:
             echo "BACKEND_IP = $BACKEND_IP"
             export API_URL="http://${BACKEND_IP}:3030/api/status"
             echo "API_URL = $API_URL"
-            # echo $API_URL >> backend/.env
-            echo "API_URL = $API_URL" >> backend/.env
-            # cat backend/.env
+            echo $API_URL >> backend/.env
+            # echo "API_URL = $API_URL" >> backend/.env
+            cat backend/.env
             # echo $API_URL >> $BASH_ENV
             # curl $API_URL -vvv
  
