@@ -231,18 +231,17 @@ jobs:
       - run:
           name: Install tar/gzip utility
           command: |
-            yum clean all
-            yum update
             yum -y install tar gzip
       - attach_workspace:
           at: .circleci/ansible/
       - run:
-          name: Install node
+          name: Install dependencies
           command: |
-            # yum install -y gcc-c++ make
-            # curl -sL https://rpm.nodesource.com/setup_12.x | bash - &&
-            # yum install -y nodejs
+            # your code here
+            yum install -y gcc-c++ make
 
+            curl -sL https://rpm.nodesource.com/setup_16.x | bash -
+            yum install -y nodejs
       - run:
           name: Get backend url
           command: |
