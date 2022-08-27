@@ -236,25 +236,21 @@ jobs:
             yum -y install tar gzip
       - attach_workspace:
           at: .circleci/ansible/
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       yum update
-      #       yum install -y gcc-c++ make
-      #       curl -sL https://rpm.nodesource.com/setup_16.x | bash -
-      #       yum install -y nodejs
-      #       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-      #       . ~/.nvm/nvm.sh
-      #       nvm install node
-      #       node -e "console.log('Running Node.js ' + process.version)"
-
       - run:
           name: Install node
-          become: yes
-          become_user: root
-          shell: "source /root/.nvm/nvm.sh && nvm install node"
-          args:
-            executable: /bin/bash
+          command: |
+            yum install -y gcc-c++ make
+            curl -sL https://rpm.nodesource.com/setup_16.x | bash -
+            yum install -y nodejs
+
+
+      # - run:
+      #     name: Install node
+      #     become: yes
+      #     become_user: root
+      #     shell: "source /root/.nvm/nvm.sh && nvm install node"
+      #     args:
+      #       executable: /bin/bash
 
       - run:
           name: Get backend url
