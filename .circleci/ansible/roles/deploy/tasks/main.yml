@@ -1,62 +1,87 @@
 ---
-- name: "upgrade packages."
+# - name: "upgrade packages."
+#   become: true
+#   apt:
+#     upgrade: "yes"
+
+- name: "copy backend folder"
   become: true
-  apt:
-    upgrade: "yes"
-
-- name: "install dependencies."
-  become: true
-  apt:
-    name: ["nodejs", "npm"]
-    state: latest
-    update_cache: yes
-
-- name: "install pm2"
-  become: true
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: present
-
-- name: Make directory called backend
-  file:
-    path: /home/ubuntu/backend
-    state: directory
-
-- name: Copy files to backend folder
   copy:
-    src: /root/project/artifact.tar.gz
-    dest: /home/ubuntu/backend/
-    owner: ubuntu
+    src: /root/project/backend
+    dest: /home/ubuntu
 
-- name: Uncompress Backend
-  shell: |
-    cd /home/ubuntu/backend
-    tar xvzf artifact.tar.gz -C .
-    ls -la
+# - name: "Install node dependencies."
+#   become: true
+#   apt:
+#     name: ["nodejs", "npm"]
+#     state: latest
+#     update_cache: yes
 
-# - name: Stop pm2
-#   ignore_errors: yes
-#   shell: |
-#     cd /home/ubuntu/backend
-#     # pm2 stop backend
-#     # pm2 delete backend
-#     pm2 stop default
-#     pm2 delete
-
-- name: Install node dependencies
+- name: "Install node dependencies."
+  become: true
   shell: |
     cd /home/ubuntu/backend
     npm install
 
-- name: Build node services
+- name: "Fix vulnerabilities"
+  become: true
   shell: |
     cd /home/ubuntu/backend
-    npm run build
-    npm run prestart:prod
+    sudo npm audit fix --audit-level=critical --force
 
-- name: Start pm2
+- name: Building  backend service
+  become: true
+  shell: |
+    cd /home/ubuntu/backend
+    sudo npm run build
+    sudo cat .env
+    sudo npm run prestart:prod
+
+- name: Run migrations again
+  become: true
+  shell: |
+    cd /home/ubuntu/backend
+    npm run migrations
+
+# - name: "install pm2"
+#   become: true
+#   npm:
+#     name: pm2
+#     global: yes
+#     production: yes
+#     state: present
+
+# - name: Make directory called backend
+#   file:
+#     path: /home/ubuntu/backend
+#     state: directory
+
+# - name: Copy files to backend folder
+#   copy:
+#     src: /root/project/artifact.tar.gz
+#     dest: /home/ubuntu/backend/
+#     owner: ubuntu
+
+# - name: Uncompress Backend
+#   shell: |
+#     cd /home/ubuntu/backend
+#     tar xvzf artifact.tar.gz -C .
+#     ls -la
+
+# - name: Install node dependencies
+#   shell: |
+#     cd /home/ubuntu/backend
+#     npm install
+
+# - name: Build node services
+#   shell: |
+#     cd /home/ubuntu/backend
+#     npm run build
+#     npm run prestart:prod
+
+- name: Run backend service
+  backend: true
   shell: |
     cd /home/ubuntu/backend 
-    pm2 start npm --name backend -- start
+    sudo pm2 start npm --name backend -- start
+    pm2 ls
