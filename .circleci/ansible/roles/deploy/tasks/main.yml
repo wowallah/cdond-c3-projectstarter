@@ -80,7 +80,7 @@
 #     npm run prestart:prod
 
 - name: Run backend service
-  backend: true
+  become: true
   shell: |
     cd /home/ubuntu/backend 
     sudo pm2 start npm --name backend -- start
