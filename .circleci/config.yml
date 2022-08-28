@@ -241,6 +241,8 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-build]
       - run:
           name: Install tar/gzip utility
           command: |
@@ -282,6 +284,8 @@ jobs:
       - image: python:3.7-alpine3.12
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build]
       - add_ssh_keys:
           fingerprints: ["39:0e:84:f8:d4:cf:72:d0:f4:c3:3a:98:2b:db:de:58:2c:06:0a:42"]
       - attach_workspace:
