@@ -1,27 +1,15 @@
 ---
-# - name: "upgrade packages."
-#   become: true
-#   apt:
-#     upgrade: "yes"
-
-- name: "copy backend folder"
+- name: "upgrade packages."
   become: true
-  copy:
-    src: /root/project/backend
-    dest: /home/ubuntu
-
-# - name: "Install node dependencies."
-#   become: true
-#   apt:
-#     name: ["nodejs", "npm"]
-#     state: latest
-#     update_cache: yes
+  apt:
+    upgrade: "yes"
 
 - name: "Install node dependencies."
   become: true
-  shell: |
-    cd /home/ubuntu/backend
-    npm install
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
 
 - name: "Fix vulnerabilities"
   become: true
@@ -29,55 +17,41 @@
     cd /home/ubuntu/backend
     sudo npm audit fix --audit-level=critical --force
 
-- name: Building  backend service
+- name: "install pm2"
   become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
+
+- name: Make directory called backend
+  file:
+    path: /home/ubuntu/backend
+    state: directory
+
+- name: Copy files to backend folder
+  copy:
+    src: /root/project/artifact.tar.gz
+    dest: /home/ubuntu/backend/
+    owner: ubuntu
+
+- name: Uncompress Backend
   shell: |
     cd /home/ubuntu/backend
-    sudo npm run build
-    sudo cat .env
-    sudo npm run prestart:prod
+    tar xvzf artifact.tar.gz -C .
+    ls -la
 
-- name: Run migrations again
-  become: true
+- name: Install node dependencies
   shell: |
     cd /home/ubuntu/backend
-    npm run migrations
+    npm install
 
-# - name: "install pm2"
-#   become: true
-#   npm:
-#     name: pm2
-#     global: yes
-#     production: yes
-#     state: present
-
-# - name: Make directory called backend
-#   file:
-#     path: /home/ubuntu/backend
-#     state: directory
-
-# - name: Copy files to backend folder
-#   copy:
-#     src: /root/project/artifact.tar.gz
-#     dest: /home/ubuntu/backend/
-#     owner: ubuntu
-
-# - name: Uncompress Backend
-#   shell: |
-#     cd /home/ubuntu/backend
-#     tar xvzf artifact.tar.gz -C .
-#     ls -la
-
-# - name: Install node dependencies
-#   shell: |
-#     cd /home/ubuntu/backend
-#     npm install
-
-# - name: Build node services
-#   shell: |
-#     cd /home/ubuntu/backend
-#     npm run build
-#     npm run prestart:prod
+- name: Build node services
+  shell: |
+    cd /home/ubuntu/backend
+    npm run build
+    npm run prestart:prod
 
 - name: Run backend service
   become: true
