@@ -11,7 +11,8 @@
     ENVIRONMENT: "{{ lookup('env','ENVIRONMENT') }}"
     NODE_ENV: "{{ lookup('env','NODE_ENV') }}"
     TYPEORM_CONNECTION: "{{ lookup('env','TYPEORM_CONNECTION') }}"
-    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    # TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    TYPEORM_PORT: 5432
     TYPEORM_HOST: "{{ lookup('env','TYPEORM_HOST') }}"
     TYPEORM_USERNAME: "{{ lookup('env','TYPEORM_USERNAME') }}"
     TYPEORM_PASSWORD: "{{ lookup('env','TYPEORM_PASSWORD') }}"

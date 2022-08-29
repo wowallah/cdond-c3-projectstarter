@@ -220,6 +220,7 @@ jobs:
             cd backend
             npm install
             npm run migrations > migration_dump.txt
+            cat migration_dump.txt
       - save_cache:
           paths: [backend/node_modules]
           key: run-migrations
@@ -252,7 +253,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # your code here
             yum install -y gcc-c++ make
             curl -sL https://rpm.nodesource.com/setup_16.x | bash -
             yum install -y nodejs
